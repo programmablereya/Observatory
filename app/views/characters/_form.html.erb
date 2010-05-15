@@ -15,6 +15,10 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :textid %><br />
+    <%= f.text_field :textid, :value => (@edittextid or @character.textid) %>
+  </div>
+  <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
