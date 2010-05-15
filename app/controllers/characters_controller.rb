@@ -2,7 +2,7 @@ class CharactersController < ApplicationController
   # GET /characters
   # GET /characters.xml
   def index
-    @characters = Character.all
+    @characters = Character.all(:conditions => {:parent_id, nil})
 
     respond_to do |format|
       format.html # index.html.erb

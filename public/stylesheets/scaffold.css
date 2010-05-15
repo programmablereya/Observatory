@@ -58,3 +58,9 @@ div.field, div.actions {
   font-size: 12px;
   list-style: square;
 }
+
+li img {
+  vertical-align: middle;
+  max-width: 30px;
+  max-height: 30px;
+}

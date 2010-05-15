@@ -6,6 +6,12 @@
   <%= @character.name %>
 </p>
 
+<% if @character.parent %>
+<p>
+  <b>This character is based on <%= link_to @character.parent.name, @character.parent %>.</b>
+</p>
+<% end %>
+
 <p>
   <b>Description:</b>
   <%= raw(@character.descriptionHTML) %>
@@ -13,9 +19,19 @@
 
 <p>
   <b>Icon:</b>
-  <%= @character.icon %>
+  <%= image_tag(@character.icon, :alt => @character.name, :title => @character.name) if (@character.icon and @character.icon != "") %>
 </p>
 
+<% parents = [@character] %>
+<% alts = @character.alternates - parents %>
+<% if !alts.empty? %>
+<p>
+  <b><%= pluralize(alts.count, "character") %> <%= alts.count == 1 ? "is" : "are" %> based on <%= @character.name %>:</b>
+  <ul>
+  <%= render(:partial => 'character', :collection => alts, :locals => {:parents => parents}) %>
+  </ul>
+</p>
+<% end %>
 
 <%= link_to 'Edit', edit_character_path(@character) %> |
 <%= link_to 'Back', characters_path %>
