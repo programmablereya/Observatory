@@ -1,3 +1,4 @@
+<% content_for :title, @character.name %>
 <p class="notice"><%= notice %></p>
 
 <p>
@@ -7,7 +8,7 @@
 
 <p>
   <b>Description:</b>
-  <%= @character.description %>
+  <%= raw(@markup) %>
 </p>
 
 <p>

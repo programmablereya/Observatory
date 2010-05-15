@@ -14,6 +14,7 @@ class CharactersController < ApplicationController
   # GET /characters/1.xml
   def show
     @character = Character.find(params[:id])
+    @markup = RedCloth.new(@character.description).to_html
 
     respond_to do |format|
       format.html # show.html.erb
