@@ -1,4 +1,6 @@
 Observatory::Application.routes.draw do |map|
+  resources :categories
+
   resources :characters do
     member do
       get :new_alternate
