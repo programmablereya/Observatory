@@ -13,7 +13,7 @@ class CharactersController < ApplicationController
   # GET /characters/1
   # GET /characters/1.xml
   def show
-    @character = Character.first(:conditions => {:textid, params[:id]})
+    @character = Character.find_by_permalink!(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,7 +25,6 @@ class CharactersController < ApplicationController
   # GET /characters/new.xml
   def new
     @character = Character.new
-    @edittextid = nil
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,8 +34,7 @@ class CharactersController < ApplicationController
 
   # GET /characters/1/edit
   def edit
-    @character = Character.first(:conditions => {:textid, params[:id]})
-    @edittextid = nil
+    @character = Character.find_by_permalink!(params[:id])
   end
 
   # POST /characters
@@ -58,15 +56,13 @@ class CharactersController < ApplicationController
   # PUT /characters/1
   # PUT /characters/1.xml
   def update
-    @character = Character.first(:conditions => {:textid, params[:id]})
+    @character = Character.find_by_permalink!(params[:id])
 
     respond_to do |format|
       if @character.update_attributes(params[:character])
         format.html { redirect_to(@character, :notice => 'Character was successfully updated.') }
         format.xml  { head :ok }
       else
-        @character.textid = params[:id]
-        @edittextid = params[:character][:textid]
         format.html { render :action => "edit" }
         format.xml  { render :xml => @character.errors, :status => :unprocessable_entity }
       end
@@ -76,7 +72,7 @@ class CharactersController < ApplicationController
   # DELETE /characters/1
   # DELETE /characters/1.xml
   def destroy
-    @character = Character.first(:conditions => {:textid, params[:id]})
+    @character = Character.find_by_permalink!(params[:id])
     @character.destroy
 
     respond_to do |format|

@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(:version => 20100515213653) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "descriptionHTML"
-    t.string   "textid"
+    t.string   "permalink"
     t.integer  "parent_id"
   end
 
-  add_index "characters", ["textid"], :name => "index_characters_on_textid"
+  add_index "characters", ["permalink"], :name => "index_characters_on_permalink"
 
 end
