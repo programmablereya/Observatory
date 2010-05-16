@@ -1,0 +1,6 @@
+<h1>New character based on <%= link_to @parent.name, @parent %></h1>
+<% content_for :title, "Creating Character from " + @parent.name %>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', @parent %>

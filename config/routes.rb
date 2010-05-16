@@ -1,5 +1,9 @@
 Observatory::Application.routes.draw do |map|
-  resources :characters
+  resources :characters do
+    member do
+      get :new_alternate
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

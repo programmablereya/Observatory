@@ -32,6 +32,19 @@ class CharactersController < ApplicationController
     end
   end
 
+  # GET /characters/1/new_alternate
+  # GET /characters/1/new_alternate.xml
+  def new_alternate
+    @parent = Character.find_by_permalink!(params[:id])
+    @character = Character.new
+    @character.parent = @parent
+
+    respond_to do |format|
+      format.html # new_alternate.html.erb
+      format.xml  { render :xml => @character }
+    end
+  end
+
   # GET /characters/1/edit
   def edit
     @character = Character.find_by_permalink!(params[:id])

@@ -1,5 +1,6 @@
 class Character < ActiveRecord::Base
 	has_permalink :name, :update => true
+        attr_readonly :parent_id
 	validates :name, :presence => true
 	before_validation :format_description
 	has_many :alternates, :class_name => "Character", :foreign_key => "parent_id", :dependent => :destroy

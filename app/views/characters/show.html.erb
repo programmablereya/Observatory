@@ -29,9 +29,16 @@
   <b><%= pluralize(alts.count, "character") %> <%= alts.count == 1 ? "is" : "are" %> based on <%= @character.name %>:</b>
   <ul>
   <%= render(:partial => 'character', :collection => alts, :locals => {:parents => parents}) %>
+  <li><%= link_to "Create new...", new_alternate_character_url(@character) %></li>
   </ul>
 </p>
+<% else %>
+<p>
+  <b>There are no characters based on <%= @character.name %>.</b> Click <%= link_to "here to create one", new_alternate_character_url(@character) %>.
+</p>
 <% end %>
+
+<br />
 
 <%= link_to 'Edit', edit_character_path(@character) %> |
 <%= link_to 'Back', characters_path %>
