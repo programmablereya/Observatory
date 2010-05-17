@@ -7,6 +7,7 @@ Observatory::Application.routes.draw do |map|
     member do
       get :new_alternate
     end
+    resources :relationships
   end
 
   # The priority is based upon order of creation:

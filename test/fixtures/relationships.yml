@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  character_id: 1
+  from_id: 1
+  source_id: 1
+  name: MyString
+
+two:
+  character_id: 1
+  from_id: 1
+  source_id: 1
+  name: MyString
