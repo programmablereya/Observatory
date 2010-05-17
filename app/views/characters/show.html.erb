@@ -23,7 +23,7 @@
 </p>
 
 <% parents = [@character] %>
-<% alts = @character.alternates - parents %>
+<% alts = @alternates - parents %>
 <% if !alts.empty? %>
 <p>
   <b><%= pluralize(alts.count, "character") %> <%= alts.count == 1 ? "is" : "are" %> based on <%= @character.name %>:</b>

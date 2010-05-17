@@ -2,7 +2,7 @@
 <%= image_tag(character.icon) if (character.icon and character.icon != "") %>
 <%= link_to character.name, character %>
 <% parents << character %>
-<% alts = character.alternates - parents %>
+<% alts = character.alternates.all - parents %>
 <% if !alts.empty?%>
   <ul>
   <%= render(:partial => 'character', :collection => alts, :locals => {:parents => parents}) %>

@@ -13,13 +13,13 @@
 
 <% if @category.tags.empty? %>
 <p>
-  <b>There are no tags in this category.</b> Click <%= link_to "here to create one", new_category_tag_url(@category) %>
+  <b>There are no tags in this category.</b> Click <%= link_to "here to create one", new_category_tag_url(@category) %>.
 </p>
 <% else %>
 <p>
   <b>Tags:</b>
   <ul>
-    <%= render(:partial => "tags/tag", :collection => @category.tags) %>
+    <%= render(:partial => "tags/tag", :collection => @tags) %>
     <li><%= link_to 'Create new...', new_category_tag_url(@category) %></li>
   </ul>
 </p>

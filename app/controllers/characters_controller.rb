@@ -14,6 +14,7 @@ class CharactersController < ApplicationController
   # GET /characters/1.xml
   def show
     @character = Character.find_by_permalink!(params[:id])
+    @alternates = @character.alternates.all
 
     respond_to do |format|
       format.html # show.html.erb
@@ -54,6 +55,10 @@ class CharactersController < ApplicationController
   # POST /characters.xml
   def create
     @character = Character.new(params[:character])
+    if !params[:character][:parent_id].blank?
+      @parent = Character.find(params[:character][:parent_id])
+      @character.parent = @parent
+    end
 
     respond_to do |format|
       if @character.save
