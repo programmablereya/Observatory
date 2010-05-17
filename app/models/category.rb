@@ -10,6 +10,8 @@ class Category < ActiveRecord::Base
 	def to_param
 		permalink
 	end
+	# Protect the permalink from being modified by user edits.
+	attr_protected :permalink
 
 	# Track tags in this category.
 	has_many :tags

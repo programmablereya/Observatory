@@ -9,6 +9,8 @@ class Tag < ActiveRecord::Base
 	def to_param
 		permalink
 	end
+	# Protect the permalink from being edited by the user.
+	attr_protected :permalink
 
 	# All tags must have a category.
 	belongs_to :category

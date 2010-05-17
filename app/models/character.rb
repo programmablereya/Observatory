@@ -9,6 +9,8 @@ class Character < ActiveRecord::Base
 	def to_param
 		permalink
 	end
+	# Protect the permalink from being updated by user edits.
+	attr_protected :permalink
 
 	# Character may be derivative of some other character (the parent).
 	belongs_to :parent, :class_name => "Character"
