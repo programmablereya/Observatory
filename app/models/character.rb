@@ -20,6 +20,11 @@ class Character < ActiveRecord::Base
 	# and cascade-destroy them when this character is destroyed.
 	has_many :alternates, :class_name => "Character", :foreign_key => "parent_id", :dependent => :destroy
 
+	# Keep track of connections to this character in either direction.
+	# Destroy them if this character is destroyed.
+	has_many :relationships, :dependent => :destroy, :inverse_of => :character
+	has_many :reverse_relationships, :dependent => :destroy, :foreign_key => "to_id", :class_name => "Relationship", :inverse_of => :target
+
 	# Sort by name if nothing else given.
 	default_scope :order => 'name ASC'
 

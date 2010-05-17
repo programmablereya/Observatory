@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100516214340) do
+ActiveRecord::Schema.define(:version => 20100517050110) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(:version => 20100516214340) do
   end
 
   add_index "characters", ["permalink"], :name => "index_characters_on_permalink"
+
+  create_table "relationships", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "to_id"
+    t.integer  "source_id"
+    t.string   "name"
+    t.string   "permalink"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tags", :force => true do |t|
     t.integer  "category_id"

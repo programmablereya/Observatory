@@ -5,6 +5,7 @@ class CreateRelationships < ActiveRecord::Migration
       t.integer :to_id
       t.integer :source_id
       t.string :name
+      t.string :permalink
 
       t.timestamps
     end

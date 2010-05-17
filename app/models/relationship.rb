@@ -22,6 +22,9 @@ class Relationship < ActiveRecord::Base
 	# Neither the character nor the target should change. If this
 	# needs to be the case, the relationship can be recreated.
 	attr_readonly :character_id, :to_id
+	# Both sides must be present or it isn't much of a relationship.
+	validates :character, :presence => true, :associated => true
+	validates :target, :presence => true, :associated => true
 
 	# The source relationship is the one that this is a mirror of. Each
 	# relationship is automatically created with a relationship mirroring
@@ -30,17 +33,38 @@ class Relationship < ActiveRecord::Base
 	belongs_to :source, :class_name => "Relationship", :dependent => :destroy, :inverse_of => :mirror
 	has_one :mirror, :class_name => "Relationship", :foreign_key => "source_id", :dependent => :destroy, :inverse_of => :source
 
-	# Class method to ease creation of two-way relationships.
-	# Chara_a is chara_b's name_a. (Professor : teacher)
-	# Chara_b is chara_b's name_b. (Jane Doe : student)
-	# Use character objects here.
-	def Relationship.connect(chara_a, name_a, chara_b, name_b)
-		transaction do
-			forward = new(:target => chara_b, :character => chara_a, :name => name_b)
-			raise ActiveRecord::Rollback unless forward.save
-			reverse = new(:target => chara_a, :character => chara_b, :name => name_a, :source => forward)
-			raise ActiveRecord::Rollback unless reverse.save
+	# Check that the mirror is valid, unless this is the mirror.
+	validate :mirror_valid
+	def mirror_valid
+		return unless source.nil?
+		if mirror.nil?
+			errors[:base] << "Reverse link can't be blank"
+		elsif !mirror.valid?
+			mirror.errors.full_messages.each do |m|
+				errors[:base] << "Reverse " + m
+			end
 		end
-		return forward
+	end
+
+	# Instance method to easily find or create the reverse
+	# relationship from this one.
+	def reverse
+		if source
+			source
+		elsif mirror
+			mirror
+		else
+			Relationship.new(:target => character, :character => target, :source => self, :name => name)
+		end
+	end
+
+	# Attribute methods using the above to quickly assign the name
+	# of the reverse relation. Allows reverse_name to be specified
+	# in the create or update.
+	def reverse_name
+		reverse.name
+	end
+	def reverse_name=(value)
+		reverse.name = value
 	end
 end
