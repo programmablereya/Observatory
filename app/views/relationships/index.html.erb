@@ -1,29 +1,15 @@
-<h1>Listing relationships</h1>
+<% content_for :title, "Relationships for #{@character.name}" %>
+<h1>Listing relationships for <%= @character.name %></h1>
 
-<table>
-  <tr>
-    <th>Character</th>
-    <th>From</th>
-    <th>Source</th>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<ul>
 <% @relationships.each do |relationship| %>
-  <tr>
-    <td><%= relationship.character_id %></td>
-    <td><%= relationship.from_id %></td>
-    <td><%= relationship.source_id %></td>
-    <td><%= relationship.name %></td>
-    <td><%= link_to 'Show', relationship %></td>
-    <td><%= link_to 'Edit', edit_relationship_path(relationship) %></td>
-    <td><%= link_to 'Destroy', relationship, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <li>
+    <%= link_to relationship.target.name, relationship.target %>
+    <i>(<%= link_to relationship.name, [@character,relationship] %>)</i>
+  </li>
 <% end %>
-</table>
+</ul>
 
 <br />
 
-<%= link_to 'New Relationship', new_relationship_path %>
+<%= link_to 'New Relationship', new_character_relationship_path(@character) %>

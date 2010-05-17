@@ -29,19 +29,20 @@ class Relationship < ActiveRecord::Base
 	# The source relationship is the one that this is a mirror of. Each
 	# relationship is automatically created with a relationship mirroring
 	# it. The mirror relationship is deleted with the source relationship,
-	# and vice versa.
-	belongs_to :source, :class_name => "Relationship", :dependent => :destroy, :inverse_of => :mirror
-	has_one :mirror, :class_name => "Relationship", :foreign_key => "source_id", :dependent => :destroy, :inverse_of => :source
+	# and vice versa. Note that only the destroy callbacks on the source
+	# are called, to avoid infinite recursion.
+	belongs_to :source, :class_name => "Relationship", :inverse_of => :mirror, :dependent => :destroy
+	has_one :mirror, :class_name => "Relationship", :foreign_key => "source_id", :dependent => :delete, :inverse_of => :source
 
 	# Check that the mirror is valid, unless this is the mirror.
 	validate :mirror_valid
 	def mirror_valid
 		return unless source.nil?
 		if mirror.nil?
-			errors[:base] << "Reverse link can't be blank"
+			errors[:reverse_name] << "can't be blank"
 		elsif !mirror.valid?
-			mirror.errors.full_messages.each do |m|
-				errors[:base] << "Reverse " + m
+			mirror.errors[:name].each do |m|
+				errors[:reverse_name] << m
 			end
 		end
 	end
@@ -66,5 +67,26 @@ class Relationship < ActiveRecord::Base
 	end
 	def reverse_name=(value)
 		reverse.name = value
+		change_reverse
+	end
+	# Prevent infinite saving recursion. Only save if the reverse
+	# object was changed through this one, and only do it once.
+	def change_reverse
+		@reverse_changed = true
+	end
+	def reverse_changed?
+		@reverse_changed
+	end
+
+	# Save the reverse of this relationship after saving this one.
+	# Allows changes in the reverse relationship to be saved without
+	# manually specifying it. Only save if the reverse actually
+	# changed to avoid infinite saving loops.
+	after_save :save_reverse
+	def save_reverse
+		if reverse_changed?
+			@reverse_changed = false
+			reverse.save
+		end
 	end
 end

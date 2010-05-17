@@ -83,7 +83,7 @@ class RelationshipsController < ApplicationController
     @relationship.destroy
 
     respond_to do |format|
-      format.html { redirect_to(relationships_url(@character)) }
+      format.html { redirect_to(character_relationships_url(@character)) }
       format.xml  { head :ok }
     end
   end

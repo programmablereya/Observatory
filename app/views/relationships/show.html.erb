@@ -1,25 +1,9 @@
 <p class="notice"><%= notice %></p>
 
 <p>
-  <b>Character:</b>
-  <%= @relationship.character_id %>
+  <b><%= @relationship.character.name %></b> <i>(<%= @relationship.reverse_name %>)</i> &harr; <b><%= @relationship.target.name %></b> <i>(<%= @relationship.name %>)</i>
 </p>
 
-<p>
-  <b>From:</b>
-  <%= @relationship.from_id %>
-</p>
-
-<p>
-  <b>Source:</b>
-  <%= @relationship.source_id %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @relationship.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_relationship_path(@relationship) %> |
-<%= link_to 'Back', relationships_path %>
+<%= link_to 'Delete', [@character,@relationship], :confirm => "Are you sure?", :method => :delete %> |
+<%= link_to 'Edit', edit_character_relationship_path(@character,@relationship) %> |
+<%= link_to 'Back', character_relationships_path(@character) %>

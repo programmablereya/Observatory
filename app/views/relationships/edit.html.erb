@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @relationship %> |
-<%= link_to 'Back', relationships_path %>
+<%= link_to 'Show', [@character,@relationship] %> |
+<%= link_to 'Back', character_relationships_path(@character) %>
