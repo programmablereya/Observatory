@@ -1,0 +1,21 @@
+<% content_for :title, "#{@tag.name}" %>
+<p class="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @tag.name %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @category.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= raw(@tag.descriptionHTML) %>
+</p>
+
+
+<%= link_to 'Edit', edit_category_tag_path(@category,@tag) %> |
+<%= link_to 'Back', category_tags_path(@category) %>

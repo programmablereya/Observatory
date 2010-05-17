@@ -11,6 +11,20 @@
   <%= raw(@category.descriptionHTML) %>
 </p>
 
+<% if @category.tags.empty? %>
+<p>
+  <b>There are no tags in this category.</b> Click <%= link_to "here to create one", new_category_tag_url(@category) %>
+</p>
+<% else %>
+<p>
+  <b>Tags:</b>
+  <ul>
+    <%= render(:partial => "tags/tag", :collection => @category.tags) %>
+    <li><%= link_to 'Create new...', new_category_tag_url(@category) %></li>
+  </ul>
+</p>
+<% end %>
+
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>

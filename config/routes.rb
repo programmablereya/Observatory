@@ -1,5 +1,7 @@
 Observatory::Application.routes.draw do |map|
-  resources :categories
+  resources :categories do
+    resources :tags
+  end
 
   resources :characters do
     member do

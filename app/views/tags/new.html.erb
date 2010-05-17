@@ -1,0 +1,6 @@
+<% content_for :title, "Creating Tag in #{@category.name}" %>
+<h1>New tag in <%= @category.name %></h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', category_tags_path(@category) %>

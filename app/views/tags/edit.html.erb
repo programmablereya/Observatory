@@ -1,0 +1,7 @@
+<% content_for :title, "Editing #{@tag.name}" %>
+<h1>Editing tag <%= @tag.name %> in <%= @category.name %></h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', [@category,@tag] %> |
+<%= link_to 'Back', category_tags_path(@category) %>
