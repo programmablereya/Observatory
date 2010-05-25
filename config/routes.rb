@@ -3,7 +3,7 @@ Observatory::Application.routes.draw do |map|
 
   resources :categories do
     resources :tags do
-      resources :taggings
+      resources :tags, :controller => "taggings"
     end
   end
 
@@ -11,7 +11,7 @@ Observatory::Application.routes.draw do |map|
     member do
       get :new_alternate
     end
-    resources :taggings
+    resources :tags, :controller => "taggings"
     resources :relationships
   end
 

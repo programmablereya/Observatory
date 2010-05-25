@@ -25,6 +25,11 @@ class Character < ActiveRecord::Base
 	has_many :relationships, :dependent => :destroy, :inverse_of => :character
 	has_many :reverse_relationships, :dependent => :destroy, :foreign_key => "to_id", :class_name => "Relationship", :inverse_of => :target
 
+	# Track tags that have been attached to this character.
+	# Untag them before destroying this character.
+	has_many :taggings, :as => :object, :dependent => :destroy
+	has_many :tags, :through => :taggings
+
 	# Sort by name if nothing else given.
 	default_scope :order => 'name ASC'
 

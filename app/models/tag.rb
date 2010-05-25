@@ -19,6 +19,16 @@ class Tag < ActiveRecord::Base
 	# the tag has been created.
 	attr_protected :category_id
 
+	# Track objects that have been tagged with this tag.
+	# Untag them if this tag is destroyed.
+	has_many :taggings, :dependent => :destroy, :inverse_of => :tag
+	has_many :tagged_characters, :through => :taggings, :source => :object, :source_type => "Character"
+	has_many :tagged_tags, :through => :taggings, :source => :object, :source_type => "Tag"
+	# Track tags that this tag has been tagged with.
+	# Untag them if this tag is destroyed.
+	has_many :r_taggings, :dependent => :destroy, :class_name => "Tagging", :as => :object
+	has_many :tags, :through => :r_taggings
+	
 	# Sort by name if nothing else given.
 	default_scope :order => 'name ASC'
 
