@@ -1,30 +1,42 @@
 class TaggingsController < ApplicationController
-  # GET /taggings
-  # GET /taggings.xml
+  # Retrieve the 
+  before_filter :get_object
+  def get_object
+    if params[:tag_id]
+      @parent = Category.find_by_permalink!(:category_id)
+      @object = @parent.tags.find_by_permalink!(:tag_id)
+      @path = category_tags_url(@parent, @object)
+    elsif params[:character_id]
+      @object = Character.find_by_permalink!(:character_id)
+      @path = character_url(@object)
+    end
+  end
+  # GET /object_path/tags
+  # GET /object_path/tags.xml
   def index
-    @taggings = Tagging.all
+    @tags = @object.tags.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @taggings }
+      format.xml  { render :xml => @tags }
     end
   end
 
-  # GET /taggings/1
-  # GET /taggings/1.xml
+  # GET /object_path/tags/id
+  # GET /object_path/tags/id.xml
   def show
-    @tagging = Tagging.find(params[:id])
+    @tag = @object.tags.find_by_permalink!(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @tagging }
+      format.html { redirect_to category_tags_url(@tag.category, @tag) } # show.html.erb
+      format.xml  { render :xml => @tag }
     end
   end
 
-  # GET /taggings/new
-  # GET /taggings/new.xml
+  # GET /object_path/tags/new
+  # GET /object_path/tags/new.xml
   def new
-    @tagging = Tagging.new
+    @tags = Tag.all -
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,19 +44,19 @@ class TaggingsController < ApplicationController
     end
   end
 
-  # GET /taggings/1/edit
+  # GET /object_path/tags/id/edit
   def edit
     @tagging = Tagging.find(params[:id])
   end
 
-  # POST /taggings
-  # POST /taggings.xml
+  # POST /object_path/tags
+  # POST /object_path/tags
   def create
     @tagging = Tagging.new(params[:tagging])
 
     respond_to do |format|
       if @tagging.save
-        format.html { redirect_to(@tagging, :notice => 'Tagging was successfully created.') }
+        format.html { redirect_to(@path, :notice => 'Tagging was successfully created.') }
         format.xml  { render :xml => @tagging, :status => :created, :location => @tagging }
       else
         format.html { render :action => "new" }
@@ -53,14 +65,14 @@ class TaggingsController < ApplicationController
     end
   end
 
-  # PUT /taggings/1
-  # PUT /taggings/1.xml
+  # PUT /object_path/tags/id
+  # PUT /object_path/tags/id.xml
   def update
     @tagging = Tagging.find(params[:id])
 
     respond_to do |format|
       if @tagging.update_attributes(params[:tagging])
-        format.html { redirect_to(@tagging, :notice => 'Tagging was successfully updated.') }
+        format.html { redirect_to(@path, :notice => 'Tagging was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -69,14 +81,14 @@ class TaggingsController < ApplicationController
     end
   end
 
-  # DELETE /taggings/1
-  # DELETE /taggings/1.xml
+  # DELETE /object_path/tags/id
+  # DELETE /object_path/tags/id.xml
   def destroy
     @tagging = Tagging.find(params[:id])
     @tagging.destroy
 
     respond_to do |format|
-      format.html { redirect_to(taggings_url) }
+      format.html { redirect_to(@path) }
       format.xml  { head :ok }
     end
   end

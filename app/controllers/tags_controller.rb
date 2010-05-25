@@ -1,11 +1,13 @@
 class TagsController < ApplicationController
+  # Retrieve the category this tag is associated with before
+  # doing anything else.
   before_filter :get_category
   def get_category
     @category = Category.find_by_permalink!(params[:category_id])
   end
 
-  # GET /tags
-  # GET /tags.xml
+  # GET /categories/category_id/tags
+  # GET /categories/category_id/tags.xml
   def index
     @tags = @category.tags.all
 
@@ -15,8 +17,8 @@ class TagsController < ApplicationController
     end
   end
 
-  # GET /tags/1
-  # GET /tags/1.xml
+  # GET /categories/category_id/tags/id
+  # GET /categories/category_id/tags/id.xml
   def show
     @tag = @category.tags.find_by_permalink!(params[:id])
 
@@ -26,8 +28,8 @@ class TagsController < ApplicationController
     end
   end
 
-  # GET /tags/new
-  # GET /tags/new.xml
+  # GET /categories/category_id/tags/new
+  # GET /categories/category_id/tags/new.xml
   def new
     @tag = @category.tags.new
 
@@ -37,13 +39,13 @@ class TagsController < ApplicationController
     end
   end
 
-  # GET /tags/1/edit
+  # GET /categories/category_id/tags/id/edit
   def edit
     @tag = @category.tags.find_by_permalink(params[:id])
   end
 
-  # POST /tags
-  # POST /tags.xml
+  # POST /categories/category_id/tags
+  # POST /categories/category_id/tags.xml
   def create
     @tag = @category.tags.new(params[:tag])
 
@@ -58,8 +60,8 @@ class TagsController < ApplicationController
     end
   end
 
-  # PUT /tags/1
-  # PUT /tags/1.xml
+  # PUT /categories/category_id/tags/id
+  # PUT /categories/category_id/tags/id.xml
   def update
     @tag = @category.tags.find_by_permalink!(params[:id])
 
@@ -74,8 +76,8 @@ class TagsController < ApplicationController
     end
   end
 
-  # DELETE /tags/1
-  # DELETE /tags/1.xml
+  # DELETE /categories/category_id/tags/id
+  # DELETE /categories/category_id/tags/id.xml
   def destroy
     @tag = @category.tags.find_by_permalink!(params[:id])
     @tag.destroy
