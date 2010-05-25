@@ -1,12 +1,17 @@
 Observatory::Application.routes.draw do |map|
+  resources :taggings
+
   resources :categories do
-    resources :tags
+    resources :tags do
+      resources :taggings
+    end
   end
 
   resources :characters do
     member do
       get :new_alternate
     end
+    resources :taggings
     resources :relationships
   end
 

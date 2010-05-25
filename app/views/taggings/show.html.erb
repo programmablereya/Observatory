@@ -1,0 +1,20 @@
+<p class="notice"><%= notice %></p>
+
+<p>
+  <b>Tag:</b>
+  <%= @tagging.tag_id %>
+</p>
+
+<p>
+  <b>Object:</b>
+  <%= @tagging.object_id %>
+</p>
+
+<p>
+  <b>Object type:</b>
+  <%= @tagging.object_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_tagging_path(@tagging) %> |
+<%= link_to 'Back', taggings_path %>
