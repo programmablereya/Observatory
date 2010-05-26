@@ -16,6 +16,24 @@
   <%= raw(@tag.descriptionHTML) %>
 </p>
 
+<% unless @tag.tags.empty? %>
+  Tags:
+  <ul>
+  <% @tag.tags.each do |tag| %>
+    <li><%= link_to tag.name, [tag.category, tag] %> <%= link_to "[Remove]", category_tag_tag_url(@category, @tag, tag), :method => :delete %></li>
+  <% end %>
+  </ul>
+<% end %>
+<% unused_tags = Tag.all - @tag.tags - [@tag] %>
+<% unless unused_tags.empty? %>
+  Add a tag:
+  <ul>
+  <% unused_tags.each do |tag| %>
+    <li><%= link_to tag.name, [tag.category, tag] %> <%= link_to "[Add]", category_tag_tag_url(@category, @tag, tag), :method => :put %></li>
+  <% end %>
+  </ul>
+<% end %>
+
 
 <%= link_to 'Edit', edit_category_tag_path(@category,@tag) %> |
 <%= link_to 'Back', category_tags_path(@category) %>

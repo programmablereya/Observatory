@@ -5,7 +5,7 @@ class TaggingsController < ApplicationController
     if params[:tag_id]
       @parent = Category.find_by_permalink!(params[:category_id])
       @object = @parent.tags.find_by_permalink!(params[:tag_id])
-      @path = category_tags_url(@parent, @object)
+      @path = category_tag_url(@parent, @object)
     elsif params[:character_id]
       @object = Character.find_by_permalink!(params[:character_id])
       @path = character_url(@object)
