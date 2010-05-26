@@ -38,6 +38,24 @@
 </p>
 <% end %>
 
+<% unless @character.tags.empty? %>
+  Tags:
+  <ul>
+  <% @character.tags.each do |tag| %>
+    <li><%= link_to tag.name, [tag.category, tag] %> <%= link_to "[Remove]", character_tag_url(@character, tag), :method => :delete %></li>
+  <% end %>
+  </ul>
+<% end %>
+<% unused_tags = Tag.all - @character.tags(true) %>
+<% unless unused_tags.empty? %>
+  Add a tag:
+  <ul>
+  <% unused_tags.each do |tag| %>
+    <li><%= link_to tag.name, [tag.category, tag] %> <%= link_to "[Add]", character_tag_url(@character, tag), :method => :put %></li>
+  <% end %>
+  </ul>
+<% end %>
+
 <br />
 
 <%= link_to 'Edit', edit_character_path(@character) %> |

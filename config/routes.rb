@@ -1,9 +1,7 @@
 Observatory::Application.routes.draw do |map|
-  resources :taggings
-
   resources :categories do
     resources :tags do
-      resources :tags, :controller => "taggings"
+      resources :tags, :controller => "taggings", :only => [:update, :destroy]
     end
   end
 
@@ -11,7 +9,7 @@ Observatory::Application.routes.draw do |map|
     member do
       get :new_alternate
     end
-    resources :tags, :controller => "taggings"
+    resources :tags, :controller => "taggings", :only => [:update, :destroy]
     resources :relationships
   end
 
