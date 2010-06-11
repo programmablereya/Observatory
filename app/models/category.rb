@@ -14,7 +14,7 @@ class Category < ActiveRecord::Base
 	attr_protected :permalink
 
 	# Track tags in this category.
-	has_many :tags, :dependent => :destroy
+	has_many :tags, :dependent => :destroy, :inverse_of => :category
 
 	# Sort alphabetically by default.
 	default_scope :order => "name ASC"

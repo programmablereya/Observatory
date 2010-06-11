@@ -13,7 +13,7 @@ class Tag < ActiveRecord::Base
 	attr_protected :permalink
 
 	# All tags must have a category.
-	belongs_to :category
+	belongs_to :category, :inverse_of => :tags
 	validates :category_id, :presence => true
 	# Prevent the category from being changed by form tampering after
 	# the tag has been created.
