@@ -22,6 +22,10 @@
   <%= image_tag(@character.icon, :alt => @character.name, :title => @character.name) if (@character.icon and @character.icon != "") %>
 </p>
 
+<p>
+  <b>Relationships:</b> <%= link_to "Show", character_relationships_url(@character) %>
+</p>
+
 <% parents = [@character] %>
 <% alts = @alternates - parents %>
 <% if !alts.empty? %>
