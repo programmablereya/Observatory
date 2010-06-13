@@ -14,6 +14,8 @@ class Character < ActiveRecord::Base
 
 	# Character may be derivative of some other character (the parent).
 	belongs_to :parent, :class_name => "Character", :inverse_of => :alternates
+	# Character's parent must also be a valid character.
+	validates :parent, :associated => true
 	# Prevent the parent character from being changed after it's created.
         attr_protected :parent_id
 	# Track all alternates (characters listing this one as a parent)

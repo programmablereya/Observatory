@@ -6,4 +6,7 @@ class Tagging < ActiveRecord::Base
 	# Prevent the tagging from changing objects or tags over its lifetime.
 	# If the tag must be changed, remove and recreate the tagging.
 	attr_readonly :object_id, :object_type, :tag_id
+	# Check that both tag and tagged are valid objects.
+	validates :object, :presence => true, :associated => true
+	validates :tag, :presence => true, :associated => true
 end
